@@ -11,7 +11,7 @@ A szkriptek lefuttatásakor **kiemelten fontos a sorrend betartása** a függős
 Az adatbázis felépítéséhez az alábbi sorrendben szükséges lefuttatni a fájlokat SQL Developer-ben:
 
 #### 0. Környezet előkészítése (Adminisztrátorként)
-* `create_user.sql` (A `MOZI_GAZDA` felhasználó létrehozása és jogosultságok megadása. Ezt `SYSTEM` vagy `SYS` felhasználóként futtasd!)
+* `create_user.sql` (Ez hozza létre a felhasználókat és az alap beállításokat.)
 
 #### 1. Szekvenciák
 * `Scripts/sequence.sql` (Ez hozza létre az automatikus ID generáláshoz szükséges szekvenciákat.)
