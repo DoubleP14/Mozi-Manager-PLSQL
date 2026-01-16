@@ -1,155 +1,81 @@
-ï»¿INSERT INTO kategoriak
-  (kat_id
-  ,megnevezes)
-VALUES
-  (seq_kategoriak.nextval
-  ,'AkciÃ³');
-INSERT INTO kategoriak
-  (kat_id
-  ,megnevezes)
-VALUES
-  (seq_kategoriak.nextval
-  ,'VÃ­gjÃ¡tÃ©k');
-INSERT INTO kategoriak
-  (kat_id
-  ,megnevezes)
-VALUES
-  (seq_kategoriak.nextval
-  ,'Sci-Fi');
+INSERT INTO kategoria (megnevezes) VALUES ('Akció');
+INSERT INTO kategoria (megnevezes) VALUES ('Vígjáték');
+INSERT INTO kategoria (megnevezes) VALUES ('Sci-Fi');
+COMMIT;
 
-INSERT INTO termek
-  (terem_id
-  ,nev
+INSERT INTO terem
+  (nev
   ,kapacitas)
 VALUES
-  (seq_termek.nextval
-  ,'Nagyterem'
+  ('Nagyterem'
   ,120);
-
-INSERT INTO termek
-  (terem_id
-  ,nev
+INSERT INTO terem
+  (nev
   ,kapacitas)
 VALUES
-  (seq_termek.nextval
-  ,'VIP Terem'
+  ('VIP Terem'
   ,30);
+COMMIT;
 
-INSERT INTO filmek
-  (film_id
-  ,cim
+INSERT INTO film
+  (cim
   ,hossz_perc
-  ,korhatar
-  ,kat_id)
+  ,kategoria_id)
 VALUES
-  (seq_filmek.nextval
-  ,'Mission Impossible'
+  ('Mission Impossible'
   ,140
-  ,16
   ,1);
-
-INSERT INTO filmek
-  (film_id
-  ,cim
+INSERT INTO film
+  (cim
   ,hossz_perc
-  ,korhatar
-  ,kat_id)
+  ,kategoria_id)
 VALUES
-  (seq_filmek.nextval
-  ,'Barbie'
+  ('Barbie'
   ,114
-  ,0
   ,2);
-
-INSERT INTO filmek
-  (film_id
-  ,cim
+INSERT INTO film
+  (cim
   ,hossz_perc
-  ,korhatar
-  ,kat_id)
+  ,kategoria_id)
 VALUES
-  (seq_filmek.nextval
-  ,'Avatar: A vÃ­z Ãºtja'
+  ('Avatar: A víz útja'
   ,192
-  ,12
   ,3);
+COMMIT;
 
-INSERT INTO vetitesek
-  (vetites_id
-  ,film_id
+INSERT INTO vetites
+  (film_id
   ,terem_id
   ,kezdes_ido)
 VALUES
-  (seq_vetitesek.nextval
-  ,10000 -- Mission Impossible
-  ,1 -- Nagyterem
+  ((SELECT film_id FROM film WHERE cim = 'Mission Impossible')
+  ,1
   ,SYSDATE + 2 / 24);
 
-INSERT INTO vetitesek
-  (vetites_id
-  ,film_id
+INSERT INTO vetites
+  (film_id
   ,terem_id
   ,kezdes_ido)
 VALUES
-  (seq_vetitesek.nextval
-  ,10001 -- Barbie
-  ,2 -- VIP
+  ((SELECT film_id FROM film WHERE cim = 'Barbie')
+  ,2
   ,to_date('2025-05-20 18:00', 'YYYY-MM-DD HH24:MI'));
+COMMIT;
 
-INSERT INTO ugyfelek
-  (ugyfel_id
-  ,nev
+INSERT INTO ugyfel
+  (nev
   ,email
   ,torzsvasarloi_pontok)
 VALUES
-  (seq_ugyfelek.nextval
-  ,'Minta Jï¿½nos'
+  ('Minta János'
   ,'janos@example.com'
   ,10);
-
-INSERT INTO ugyfelek
-  (ugyfel_id
-  ,nev
+INSERT INTO ugyfel
+  (nev
   ,email
   ,torzsvasarloi_pontok)
 VALUES
-  (seq_ugyfelek.nextval
-  ,'Teszt Elek'
+  ('Teszt Elek'
   ,'elek@example.com'
-  ,0);
-
-INSERT INTO jegyek
-  (jegy_id
-  ,vetites_id
-  ,ugyfel_id
-  ,szek_szam
-  ,ar
-  ,vasarlas_datuma
-  ,status)
-VALUES
-  (seq_jegyek.nextval
-  ,10000
-  ,10000
-  ,5
-  ,2500
-  ,SYSDATE
-  ,'FIZETVE');
-
-INSERT INTO jegyek
-  (jegy_id
-  ,vetites_id
-  ,ugyfel_id
-  ,szek_szam
-  ,ar
-  ,vasarlas_datuma
-  ,status)
-VALUES
-  (seq_jegyek.nextval
-  ,10000
-  ,10001
-  ,6
-  ,2500
-  ,SYSDATE
-  ,'FOGLALT');
-
+  ,60);
 COMMIT;

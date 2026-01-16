@@ -5,18 +5,17 @@ SELECT
     t.nev AS terem,
     v.kezdes_ido,
     f.hossz_perc
-FROM vetitesek v
-JOIN filmek f ON v.film_id = f.film_id
-JOIN termek t ON v.terem_id = t.terem_id
-JOIN kategoriak k ON f.kat_id = k.kat_id; 
+FROM vetites v
+JOIN film f ON v.film_id = f.film_id
+JOIN terem t ON v.terem_id = t.terem_id
+JOIN kategoria k ON f.kategoria_id = k.kategoria_id;
 
 CREATE OR REPLACE VIEW v_bevetel_filmenkent AS
 SELECT 
     f.cim,
     COUNT(j.jegy_id) AS eladott_jegyek,
-    SUM(j.ar) AS osszes_bevetel
-FROM filmek f
-JOIN vetitesek v ON f.film_id = v.film_id
-JOIN jegyek j ON v.vetites_id = j.vetites_id
-WHERE j.status = 'FIZETVE'
+    NVL(SUM(j.ar), 0) AS osszes_bevetel
+FROM film f
+LEFT JOIN vetites v ON f.film_id = v.film_id
+LEFT JOIN jegy j ON v.vetites_id = j.vetites_id AND j.status = 'FIZETVE'
 GROUP BY f.cim;

@@ -20,6 +20,5 @@ grant CREATE TABLE TO mozi_gazda;
 grant CREATE view TO mozi_gazda;
 grant CREATE PROCEDURE TO mozi_gazda;
 grant CREATE TRIGGER TO mozi_gazda;
-grant CREATE job TO mozi_gazda;
 grant CREATE sequence TO mozi_gazda;
 grant CREATE TYPE TO mozi_gazda;
