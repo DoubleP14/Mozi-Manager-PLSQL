@@ -1,4 +1,4 @@
--- 1. Típus létrehozása (Fejléc)
+-- 1. Típus létrehozás
 CREATE OR REPLACE TYPE ty_film_adat AS OBJECT (
     film_cim    VARCHAR2(100),
     hossz_perc  NUMBER,
@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE ty_film_adat AS OBJECT (
 );
 /
 
--- 2. Típus törzse (Logika)
+-- 2. Típus törzs
 CREATE OR REPLACE TYPE BODY ty_film_adat AS
     MEMBER FUNCTION get_info RETURN VARCHAR2 IS
     BEGIN
@@ -16,5 +16,4 @@ CREATE OR REPLACE TYPE BODY ty_film_adat AS
 END;
 /
 
--- 3. A Csomag "megrugdosása" (Újrafordítás)
 ALTER PACKAGE mozi_manager COMPILE BODY;

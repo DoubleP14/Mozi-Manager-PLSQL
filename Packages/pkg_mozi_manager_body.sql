@@ -1,11 +1,11 @@
 CREATE OR REPLACE PACKAGE BODY mozi_manager IS
 
-  -- Hibanaplózás (SQLCODE változóval javítva!)
+  -- Hibanaplózás 
   PROCEDURE log_error(p_msg IN VARCHAR2, p_proc IN VARCHAR2) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     v_code NUMBER; 
   BEGIN
-    v_code := SQLCODE; -- Elmentjük a kódot változóba
+    v_code := SQLCODE;
     INSERT INTO hiba_naplo (hiba_id, hiba_kod, hiba_uzenet, eljaras_neve, felhasznalo)
     VALUES (seq_hiba.nextval, v_code, p_msg, p_proc, USER);
     COMMIT; 
@@ -38,23 +38,19 @@ CREATE OR REPLACE PACKAGE BODY mozi_manager IS
     v_dummy      NUMBER;
     e_foglalt_szek EXCEPTION;
   BEGIN
-    -- Zárolás
     SELECT 1 INTO v_dummy FROM vetites WHERE vetites_id = p_vetites_id FOR UPDATE;
 
-    -- Pontok ellenõrzése
     SELECT torzsvasarloi_pontok INTO v_pontok FROM ugyfel WHERE ugyfel_id = p_ugyfel_id;
     IF v_pontok > 50 THEN 
         v_ar := 2000; 
         dbms_output.put_line('Kedvezmény!');
     END IF;
   
-    -- Szék ellenõrzés
     SELECT COUNT(*) INTO v_foglalt_db FROM jegy
      WHERE vetites_id = p_vetites_id AND szek_szam = p_szek_szam AND status <> 'TOROLT';
   
     IF v_foglalt_db > 0 THEN RAISE e_foglalt_szek; END IF;
   
-    -- Beszúrás
     INSERT INTO jegy (vetites_id, ugyfel_id, szek_szam, ar, status)
     VALUES (p_vetites_id, p_ugyfel_id, p_szek_szam, v_ar, 'FIZETVE');
     
